@@ -163,6 +163,10 @@ module Linguist
 
           if blob.include_in_language_stats?
             file_map[new] = [blob.language.group.name, blob.size]
+          elsif !blob.vendored? && !blob.generated? && !blob.documentation? && blob.language.nil?
+            # If the file is not vendored, generated -or- documentation AND is not a known language:
+            # https://github.com/github/linguist/issues/4950
+            file_map[new] = ["other", blob.size]
           end
 
           blob.cleanup!
