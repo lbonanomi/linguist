@@ -31,7 +31,9 @@ if File.directory?(path)
     repo.languages.sort_by { |_, size| size }.reverse.each do |language, size|
       percentage = ((size / repo.size.to_f) * 100)
       percentage = sprintf '%.2f' % percentage
-      puts "%-7s %s" % ["#{percentage}%", language]
+      if language != "other"
+        puts "%-7s %s" % ["#{percentage}%", language]
+      end
     end
   end
   if breakdown
